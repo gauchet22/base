@@ -1,0 +1,200 @@
+<div id="betfinder" class="betFinderBox">
+    <h2>Betfinder</h2>
+    <div id="alerts">
+        {{#arbAlerts}}
+        <div class="alert alert-danger">
+            {{#arbRemoved}}
+                    <span class="arbRemoved">{{lang.sidebar_arbRemoved}}
+                        {{#bestPercent}}
+                            {{lang.sidebar_confirmBetterPercentage}}
+                            <span class="">{{#roundToFixed}}{"value": {{bestPercent}}, "decimals": 2}{{/roundToFixed}}%</span>
+                            {{lang.sidebar_confirmBetterPercentageEnd}}
+                            <br>
+                            <button class="btn btn-sm btn-primary" value="bestPcnt" onclick="javascript:if (typeof _paq !== 'undefined') _paq.push(['trackEvent', 'Betfinder extension', 'Confirm arb remove']);" action="confirmUpdate">{{lang.sidebar_alertProceed}}</button>
+                        {{/bestPercent}}
+                        {{^bestPercent}}
+                        </br>
+                        {{/bestPercent}}
+                    </span>
+            {{/arbRemoved}}
+            {{#duplicateBookie}}
+            {{lang.sidebar_arbDuplicateBookie}}</br>
+            {{/duplicateBookie}}
+            {{#noHomeSite}}
+            {{lang.sidebar_noHomeSite}}</br>
+            {{/noHomeSite}}
+        </div>
+        {{/arbAlerts}}
+        {{#arbEmpty}}
+        <div class="alert alert-info">
+            <span>{{lang.sidebar_arbEmpty}}</span>
+            <button id="betFinderShowHome" class="btn btn-sm btn-primary" title="{{lang.sidebar_showHomeDesc}}" value="Home" onclick="javascript:if (typeof _paq !== 'undefined') _paq.push(['trackEvent', 'Betfinder extension', 'Show home when betfinder is empty']);" action="showHome">{{lang.sidebar_showHome}}</button>
+        </div>
+        {{/arbEmpty}}
+        {{^arbEmpty}}
+        {{/arbEmpty}}
+    </div>
+    <div id="arb">
+        {{#arb}}
+        {{#updatedArb}}
+        <div class="updatedArb">
+            <div class="alert alert-danger">
+                <span class="badge badge-info">{{#roundToFixed}}{"value": {{updatedArb.arb.actualPcnt}}, "decimals": 2}{{/roundToFixed}}%</span>
+                <span>{{lang.sidebar_confirmArbUpdate}}</span>
+                <div class="betFinderConfirmButtons">
+                    <button class="display-tooltip btn btn-sm btn-primary" data-placement="bottom"
+                            value="true" onclick="javascript:if (typeof _paq !== 'undefined') _paq.push(['trackEvent', 'Betfinder extension', 'Accept update']);" action="confirmUpdate">{{lang.sidebar_alertYes}}
+                    </button>
+                    <button class="display-tooltip btn btn-sm btn-primary" data-placement="bottom"
+                            value="false" onclick="javascript:if (typeof _paq !== 'undefined') _paq.push(['trackEvent', 'Betfinder extension', 'Reject update']);" action="confirmUpdate">{{lang.sidebar_alertNo}}
+                    </button>
+                </div>
+                {{#updatedArb.arb.isBetterPcnt}}
+                <br/>
+                <div>
+                    <span>
+                        {{lang.sidebar_confirmBetterPercentage}}
+                        <span class="badge betFinderHeaderPercentageSelected badge">{{#roundToFixed}}{"value": {{updatedArb.arb.bestPercentage}}, "decimals": 2}{{/roundToFixed}}%</span>
+                        {{lang.sidebar_confirmBetterPercentageEnd}}
+                    </span>
+                    <button class="display-tooltip btn btn-sm btn-primary" data-placement="bottom"
+                            value="bestPcnt" onclick="javascript:if (typeof _paq !== 'undefined') _paq.push(['trackEvent', 'Betfinder extension', 'Confirm better percentage']);" action="confirmUpdate">{{lang.sidebar_alertProceed}}
+                    </button>
+                </div>
+                {{/updatedArb.arb.isBetterPcnt}}
+            </div>
+        </div>
+        {{/updatedArb}}
+        {{#updatedArbConfirm}}
+        <div class="updatedArb">
+            <div class="alert alert-danger">
+                <span>{{lang.sidebar_arbUpdate}}</span>
+                <span class="badge badge-info">{{#roundToFixed}}{"value": {{updatedArbConfirm.arb.actualPcnt}}, "decimals": 2}{{/roundToFixed}}%</span>
+            </div>
+        </div>
+        {{/updatedArbConfirm}}
+        <div id="arbheader">
+            <div id="header" class="betFinderHeader">
+                <span class="badge badge-{{arbType}}">{{^updatedActualPcnt}}{{#roundToFixed}}{"value": {{actualPcnt}}, "decimals": 2}{{/roundToFixed}}%{{/updatedActualPcnt}}</span>
+                <span >{{refLeague}}&nbsp;</span>
+                <div>
+                    <span >{{refHomePlayer}}</span>
+                    <span >{{lang.sidebar_vs}}</span>
+                    <span >{{refAwayPlayer}},&nbsp;</span>
+                </div>
+                <span >{{arbAssumedKickoff}}</span>
+            </div>
+            <div id="buttons" class="betFinderButtons">
+                <button id="betFinderShowHome" class="btn btn-sm btn-primary" title="{{lang.sidebar_showHomeDesc}}" value="Home" onclick="javascript:if (typeof _paq !== 'undefined') _paq.push(['trackEvent', 'Betfinder extension', 'Find Arb']);" action="findArb">{{lang.sidebar_findArb}}</button>
+                <button class="btn btn-sm btn-primary" title="{{lang.sidebar_calcMaxStakesDesc}}" value="CalcStakes" onclick="javascript:if (typeof _paq !== 'undefined') _paq.push(['trackEvent', 'Betfinder extension', 'Calc max stakes']);" action="calcMaxStakes">{{lang.sidebar_calcMaxStakes}}</button>
+                <button class="btn btn-sm btn-primary {{^enablePlaceBets}}disabled{{/enablePlaceBets}}" {{^enablePlaceBets}}disabled='true'{{/enablePlaceBets}} title="Place the bets amount" value="Place Bets" onclick="javascript:if (typeof _paq !== 'undefined') _paq.push(['trackEvent', 'Betfinder extension', 'Place all bets']);" action="placeBets">{{lang.sidebar_placeBets}}</button>
+                <button class="btn btn-sm btn-primary bookkeeping" title="{{lang.sidebar_setBookkeeper}}" value="bookkeeping" onclick="javascript:if (typeof _paq !== 'undefined') _paq.push(['trackEvent', 'Betfinder extension', 'Set bookkeeping']);" action="setBookkeeper">{{lang.sidebar_setBookkeepper}}</button>
+            </div>
+            <div id="totalStakes">
+                <span class="total-stakes">{{lang.sidebar_totalStake}}: </span>
+                <input id="betFinderTotalStakes" type="text" action="calcStakes" onclick="javascript:if (typeof _paq !== 'undefined') _paq.push(['trackEvent', 'Betfinder extension', 'Set total stakes']);" value="{{totalStake}}" {{#arb.active}}disabled{{/arb.active}} />
+                <div class="spinner-buttons btn-group btn-group-vertical">
+                    <button stepup type="button" onclick="javascript:if (typeof _paq !== 'undefined') _paq.push(['trackEvent', 'Betfinder extension', 'Set total stake up']);" class="btn spinner-up" {{#arb.active}}disabled{{/arb.active}}>
+                    <i stepup class="fa fa-chevron-up"></i>
+                    </button>
+                    <button stepdown type="button" onclick="javascript:if (typeof _paq !== 'undefined') _paq.push(['trackEvent', 'Betfinder extension', 'Set total stake down']);" class="btn spinner-down" {{#arb.active}}disabled{{/arb.active}}>
+                    <i stepdown class="fa fa-chevron-down"></i>
+                    </button>
+                </div>
+                <span class="currency">{{currency}}</span>
+            </div>
+            <div id="arbEarning">
+                <span>{{lang.sidebar_arbEarning}}: </span>
+                <span class="ammount {{#isNegativeEarn}}{{earn}}{{/isNegativeEarn}}">{{earn}}</span>
+                <span class="currency">{{currency}}</span>
+            </div>
+            <div id="autoAdjust">
+                <span>{{lang.sidebar_autoAdjustStakes}}: </span>
+                <input action="autoAdjustToggle" onclick="javascript:if (typeof _paq !== 'undefined') _paq.push(['trackEvent', 'Betfinder extension', 'Set auto adjust stakes']);" id="betFinderAutoAdjust" type="checkbox" {{#arb.active}}disabled{{/arb.active}} {{#autoAdjustStake}}checked{{/autoAdjustStake}}>
+            </div>
+        </div>
+        <div id="bets">
+            {{#bets}}
+            <div class="bet" id="betFinderBetBox_{{bookieName}}_{{id}}">
+                <h5 class="title">
+                    <span class="">{{bookieDisplayName}}</span>
+                    <span class="info text-info">{{{betInfoShort}}}</span> @
+                    <span class="">{{displayPrefOddFormat}}</span>
+                    <span class="">{{displaySiteOddFormat}}</span>
+                </h5>
+                <div class="stake">
+                    <span>{{lang.sidebar_stakeAmount}}: </span>
+                    <div class="spinner">
+                        <input rounding="{{rounding}}" onclick="javascript:if (typeof _paq !== 'undefined') _paq.push(['trackEvent', 'Betfinder extension', 'Set stake on bet']);" type="text" action="calcStakesFromBet" betid="{{id}}" id="betFinderStake_{{id}}" value="{{amount}}" {{#arb.active}}disabled{{/arb.active}}>
+                        <div class="spinner-buttons btn-group btn-group-vertical">
+                            <button stepup type="button" onclick="javascript:if (typeof _paq !== 'undefined') _paq.push(['trackEvent', 'Betfinder extension', 'Set stake on bet up']);" class="btn spinner-up" {{#arb.active}}disabled{{/arb.active}}>
+                            <i stepup class="fa fa-chevron-up"></i>
+                            </button>
+                            <button stepdown type="button" onclick="javascript:if (typeof _paq !== 'undefined') _paq.push(['trackEvent', 'Betfinder extension', 'Set stake on bet down']);" class="btn spinner-down" {{#arb.active}}disabled{{/arb.active}}>
+                            <i stepdown class="fa fa-chevron-down"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <span class="currency">{{currency}}</span>
+                    {{#amountBase}}
+                    <span class="amount-base">({{#roundToFixed}}{"value": {{amountBase}}, "decimals": 2}{{/roundToFixed}} {{arb.currency}})</span>
+                    {{/amountBase}}
+                    {{#liability}}
+                    <div class="liability">
+                        <span> {{lang.sidebar_liability}}: </span>
+                        <span class="amount-liability">{{#roundToFixed}}{"value": {{liability}}, "decimals": 2}{{/roundToFixed}} {{arb.currency}}</span>
+                    </div>
+                    {{/liability}}
+                    <div class="balance">
+                        <span>{{lang.sidebar_balance}}:</span>
+                        <span>{{balance}}  </span>
+                        <span>{{currency}} </span>
+                    </div>
+                </div>
+                <div class="max-stake">
+                    <span>{{lang.sidebar_max}}:</span>
+                    <span>{{maxStake}}</span>
+                    <span>{{currency}}</span>
+                </div>
+                <div class="earning">
+                    <span >{{lang.sidebar_individualEarning}}: </span>
+                    <span class="{{#isNegativeEarn}}{{earn}}{{/isNegativeEarn}}">{{earn}}</span>
+                    <span>{{arb.currency}}</span>
+                </div>
+                <div class="progress">
+                    {{#progress}}
+                    <div rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="{{#formatAlertMessage}}{{message}}{{/formatAlertMessage}}" style="float: left;width: 75%;" id="betFinderProgress_{{id}}" class="progress {{#active}}progress-striped active{{/active}}">
+                        <div class="progress-bar progress-bar-{{#progressType}}{{type}}{{/progressType}}" style="width: {{percent}}%"></div>
+                    </div>
+                    {{/progress}}
+                    {{#betPlaceProgress}}
+                    <div rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="{{#formatAlertMessage}}{{message}}{{/formatAlertMessage}}" style="width: 25%;" id="betFinderStakeProgress_{{id}}" class="progress {{#active}}progress-striped active{{/active}}">
+                        <div class="progress-bar progress-bar-{{#progressType}}{{type}}{{/progressType}}" style="width: {{percent}}%"></div>
+                    </div>
+                    {{/betPlaceProgress}}
+                </div>
+                <div class="messages" id="betFinderAlerts_{{id}}">
+                    <ul>
+                        {{#alerts}}
+                        <li>
+                            <span class="betFinderMessage"><i class="{{#alertIcon}}{{type}}{{/alertIcon}}"></i> {{#formatAlertMessage}}{{message}}{{/formatAlertMessage}}</span>
+                        </li>
+                        {{/alerts}}
+                    </ul>
+                </div>
+                <div class="bet-buttons">
+                    <button class="btn btn-sm btn-primary" title="{{lang.sidebar_showDesc}}" value="Show" onclick="javascript:if (typeof _paq !== 'undefined') _paq.push(['trackEvent', 'Betfinder extension', 'Show tab bet']);" action="showTab" bookiename="{{bookieName}}">{{lang.sidebar_show}}</button>
+                    <span {{#progress.active}}hidden{{/progress.active}}>
+                        <button class="btn btn-sm btn-primary" data-placement="bottom" title="{{lang.sidebar_replayDesc}}" value="Replay" onclick="javascript:if (typeof _paq !== 'undefined') _paq.push(['trackEvent', 'Betfinder extension', 'Replay bet']);" action="replay" betid="{{id}}"><i class="icon-refresh"></i> {{lang.sidebar_replay}}</button>
+                    </span>
+                    <span {{^progress.active}}hidden{{/progress.active}}>
+                        <button class="btn btn-sm btn-primary" data-placement="bottom" title="{{lang.sidebar_stopDesc}}" value="Stop" onclick="javascript:if (typeof _paq !== 'undefined') _paq.push(['trackEvent', 'Betfinder extension', 'Stop bet']);" action="stop" betid="{{id}}"><i class="icon-refresh"></i> {{lang.sidebar_stop}}</button>
+                    </span>
+                    <button class="btn btn-sm btn-primary" title="{{lang.sidebar_placeBet}}" {{^enablePlaceBets}}disabled='true'{{/enablePlaceBets}} value="Place" onclick="javascript:if (typeof _paq !== 'undefined') _paq.push(['trackEvent', 'Betfinder extension', 'Place bet']);" action="placeBet" betid="{{id}}">{{lang.sidebar_placeBet}}</button>
+                </div>
+            </div>
+            {{/bets}}
+        </div>
+        {{/arb}}
+    </div>
+</div>

@@ -1,0 +1,129 @@
+<div id="betFinderMain" class="modal-body">
+{{#arb}}
+ <!--<div class="arbHeader">
+   <div class="arbHeaderPlayers">
+         {{refHomePlayer}}
+         <span class="arbHeaderVs">vs.</span>
+         {{refAwayPlayer}}
+   </div>
+         <div class="arbHeaderLeague">
+           {{refLeague}}<br/>
+           <span class="arbHeaderSport">{{sport}}</span><br/>
+           <span class="arbHeaderKickoff">{{tLU}}</span>
+         </div>
+         <div class="arbHeaderPercentage">{{pcnt}}%</div>
+         <button class="display-tooltip btn btn-primary" data-placement="bottom" title="Show arbvestor site" value="Home" action="showHome">Show home</button>
+         <button class="display-tooltip btn btn-primary" data-placement="bottom" title="Place the bets amount" value="Place Bets" action="placeBets">Place Bets {{enablePlaceBets}}</button>
+ </div>-->
+ {{/arb}}
+ <div class="arbBets" id="bets">
+ {{#bets}}
+   <div class="arbBet" id="bet{{id}}">
+         <div class="bookieName">{{bookieName}}</div>
+         <div class="bookieName">ID: {{id}}</div>
+         <div class="balance">
+            Balance: {{balance}} {{currency}}
+         </div>
+          <div class="stakeMinMax">
+            Min: {{minStake}} {{currency}}
+            Max: {{maxStake}} {{currency}}
+         </div>
+         <div class="bookieName">
+          {{bookieName}} - {{decimalOdd}} - {{oddUp}}/{{oddDown}}
+         </div>
+         <div>
+          siteformat: {{displaySiteOddFormat}}
+         </div>
+         <div>
+          {{betPage.oddFormat}} - {{betPage.decimalOdd}} - {{betPage.oddUp}}/{{betPage.oddDown}} - {{betPage.usOdd}}
+         </div>
+         <div>
+          {{betBetslip.oddFormat}} - {{betBetslip.decimalOdd}} - {{betBetslip.oddUp}}/{{betBetslip.oddDown}} - {{betBetslip.usOdd}}
+         </div>
+
+
+         <button class="display-tooltip btn" data-placement="bottom" title="Show bookies page" value="Replay" action="showTab" bookiename="{{bookieName}}">Show</button>
+         <button class="display-tooltip btn" data-placement="bottom" title="Place the bet again" value="Replay" action="replay" betID="{{id}}"><i class="icon-refresh"></i> Replay</button>
+         <div id="div_details_bet{{betIndex}}" style="overflow-x: auto;">
+                 <table class="table betsTable">
+                         <tr class="market"><td>Market</td>
+                          <td>
+                            {{market}}
+                            <hr>
+                            <span {{^betPageCheck.market}}style="background-color: #FFAAAA;"{{/betPageCheck.market}}>{{betPage.market}}</span>
+                            <hr>
+                            <span {{^betBetslipCheck.market}}style="background-color: #FFAAAA;"{{/betBetslipCheck.market}}>{{betBetslip.market}}</span>
+                          </td>
+                         </tr>
+                         <tr class="leg"><td>Leg</td>
+                          <td>
+                            {{leg}}
+                            <hr>
+                            <span {{^betPageCheck.leg}}style="background-color: #FFAAAA;"{{/betPageCheck.leg}}>{{betPage.leg}}</span>
+                            <hr>
+                            <span {{^betBetslipCheck.leg}}style="background-color: #FFAAAA;"{{/betBetslipCheck.leg}}>{{betBetslip.leg}}</span>
+                          </td>
+                         </tr>
+                         <tr class="handicap"><td>Handicap</td>
+                          <td>
+                            {{handicap}}
+                            <hr>
+                            <span {{^betPageCheck.handicap}}style="background-color: #FFAAAA;"{{/betPageCheck.handicap}}>{{betPage.handicap}}</span>
+                            <hr>
+                            <span {{^betBetslipCheck.handicap}}style="background-color: #FFAAAA;"{{/betBetslipCheck.handicap}}>{{betBetslip.handicap}}</span>
+                          </td>
+                         </tr>
+                         <tr class="decimalOdd"><td>decimalOdd</td>
+                          <td>
+                            {{decimalOdd}}
+                            <hr>
+                            <span {{^betPageCheck.decimalOdd}}style="background-color: #FFAAAA;"{{/betPageCheck.decimalOdd}}>{{betPage.decimalOdd}}</span>
+                            <hr>
+                            <span {{^betBetslipCheck.decimalOdd}}style="background-color: #FFAAAA;"{{/betBetslipCheck.decimalOdd}}>{{betBetslip.decimalOdd}}</span>
+                          </td>
+                         </tr>
+                         <tr class="player1"><td>player1</td>
+                          <td>
+                            {{player1}}
+                            <hr>
+                            <span {{^betPageCheck.player1}}style="background-color: #FFAAAA;"{{/betPageCheck.player1}}>{{betPage.player1}}</span>
+                            <hr>
+                            <span {{^betBetslipCheck.player1}}style="background-color: #FFAAAA;"{{/betBetslipCheck.player1}}>{{betBetslip.player1}}</span>
+                          </td>
+                         </tr>
+                         <tr class="player2"><td>player2</td>
+                          <td>
+                            {{player2}}
+                            <hr>
+                            <span {{^betPageCheck.player2}}style="background-color: #FFAAAA;"{{/betPageCheck.player2}}>{{betPage.player2}}</span>
+                            <hr>
+                            <span {{^betBetslipCheck.player2}}style="background-color: #FFAAAA;"{{/betBetslipCheck.player2}}>{{betBetslip.player2}}</span>
+                          </td>
+                         </tr>
+                         <tr class="kickoff"><td>kickoff</td>
+                          <td>
+                            {{#formatDateTime}}{"date": "{{kickoff}}", "format": "{{lang.dateTimeFormat}}"}{{/formatDateTime}}
+                            <hr>
+                            <span {{^betPageCheck.kickoff}}style="background-color: #FFAAAA;"{{/betPageCheck.kickoff}}>{{#formatDateTime}}{"date": "{{betPage.kickoff}}", "format": "{{lang.dateTimeFormat}}"}{{/formatDateTime}}</span>
+                            <hr>
+                            <span {{^betBetslipCheck.kickoff}}style="background-color: #FFAAAA;"{{/betBetslipCheck.kickoff}}>{{#formatDateTime}}{"date": "{{betBetslip.kickoff}}", "format": "{{lang.dateTimeFormat}}"}{{/formatDateTime}}</span>
+                          </td>
+                         </tr>
+                         <tr class="pagelink"><td>pagelink</td>
+                          <td>{{pagelink}}</td>
+                         </tr>
+                         <tr  class="betlink"><td>betlink</td>
+                          <td>{{betlink}}</td>
+                         </tr>
+                         <tr class="gameMiscInfo"><td>gameMiscInfo</td>
+                          <td>{{gameMiscInfo}}</td>
+                         </tr>
+                         <tr class="gameReversed"><td>gameReversed</td>
+                          <td>{{gameReversed}}</td>
+                         </tr>
+                 </table>
+         </div>
+   </div>
+ {{/bets}}
+ </div>
+</div>

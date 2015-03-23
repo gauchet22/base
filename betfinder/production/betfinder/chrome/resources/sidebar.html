@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <link href="resource://betfinder/css/bootstrap.min.css" rel="stylesheet" type="text/css"></link>
+        <link href="resource://betfinder/css/font-awesome.css" rel="stylesheet" type="text/css"></link>
+        <link href="resource://betfinder/default.css" rel="stylesheet" type="text/css"></link>
+        <link href="resource://betfinder/css/hopscotch-0.1.2.css" rel="stylesheet" type="text/css"></link>
+        <script src="resource://betfinder/jquery.min.js"></script>
+        <script src="resource://betfinder/bootstrap.min.js"></script>
+    </head>
+    <body>
+         <div id="sidebarContent">
+            <div id="contentBody">
+               
+            </div>
+        </div>
+        <!-- these scripts injected into sidebar frame after the site is loaded -->
+        <script id="footerscripts">
+            function loadTooltip() {
+                $('[rel=tooltip]').tooltip();
+            }
+            function waitForJQueryAndBootstrap() {
+                if (window.$)
+                {
+                    if ($('body'))
+                        if ($('body').tooltip) 
+                            loadTooltip();
+                }
+                else
+                {
+                  setTimeout(waitForJQueryAndBootstrap, 50);
+                }
+            }
+            waitForJQueryAndBootstrap();
+        </script>
+    </body>
+</html>
